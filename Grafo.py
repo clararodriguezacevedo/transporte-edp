@@ -1,23 +1,49 @@
 from Conexion import Conexion
 
+
+class Nodo:
+    def __init__(self, conexion):
+        self.conexion = conexion
+        self.siguiente = None
+
+    def __str__(self):
+        return str(self.conexion)
+
+
+
 class Grafo:
     modos_permitidos = {'ferroviaria', 'automotor', 'fluvial', 'aerea'}
     
     def __init__(self, modo): #############tal vez conviene no pasar el modo como atributo y hacer una clase grafo por cada modo (grafo_ferroviario, grafo_fluvial, etc.)
         self.modo=Grafo.validar_modo(modo) #cada modo (ferroviario, fluvial...) seria una instancia de grafo
-        self.conexiones=[] #lista con las conexiones de ese modo (podria ser otra estructura)
+        self.primer_conexion= None #lista con las conexiones de ese modo (podria ser otra estructura)
     
     def __str__(self):
         return f"Este es el grafo {self.modo}"
     
     def mostrar_info_grafo(self):
-        for elemento in self.conexiones:
-            print(elemento)
+        nodo_actual = self.primer_conexion
+        while nodo_actual:
+            print(nodo_actual)
+            nodo_actual =nodo_actual.siguiente
+            
+            
     
     def enlazar_conexion_grafo(self,conexion): #agrega la conexion al grafo
         if not isinstance(conexion,Conexion):
             raise ValueError("No se ingreso una conexion")
-        self.conexiones.append(conexion)
+        
+        nuevo_nodo = Nodo(conexion)
+        
+        if self.primer_conexion is None:
+            self.primer_conexion = nuevo_nodo
+        else:
+            actual = self.primer_conexion
+            while actual.siguiente:
+                actual = actual.siguiente
+            actual.siguiente = nuevo_nodo
+        
+    
     
     def __eq__(self,other):
         if not isinstance(other,Grafo):

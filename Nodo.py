@@ -9,10 +9,13 @@ class Nodo:
         self.fluvial=[]
         self.aerea=[]
         self.automotor=[]
-        
+
+    def __hash__(self):
+        return hash(self.ciudad)
+
     def __str__(self):
         return f"Ciudad: {self.ciudad}"
-    
+
     def enlazar_conexion(self,conexion): #agrega la conexion segun el modo, al atributo correspondiente
         if not isinstance(conexion,Conexion):
             raise ValueError("No se ingreso una conexion")
@@ -26,10 +29,10 @@ class Nodo:
                 self.aerea.append(conexion)
             case "automotor":
                 self.automotor.append(conexion)
-    
+
     def mostrar_info(self): #muestra la ciudad del nodo, y todas sus conexiones
         print(f"Ciudad: {self.ciudad}")
-        
+
         ############esto seguro se puede hacer mucho mejor, cambio hecho rapido
         print("Modo Ferroviario: ")
         if self.ferroviaria != []:
@@ -55,7 +58,7 @@ class Nodo:
                 print(elemento)
         else:
             print("No hay conexiones en este modo.")
-        
+
     def __eq__(self,other): #dos nodos son iguales si son la misma ciudad (usado al leer conexiones.csv)
         if not isinstance(other,Nodo):
             raise ValueError("No se ingreso un nodo.")

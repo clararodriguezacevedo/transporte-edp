@@ -2,7 +2,12 @@ from Conexion import Conexion
 import matplotlib.pyplot as plt
 import networkx as nx
 
-
+# class Nodo_:
+#     def __init__(self,conexion):
+#         self.conexion = conexion   #instancia de conexion
+#         self.siguiente = None
+      
+    
 class Grafo:
     modos_permitidos = {'ferroviaria', 'automotor', 'fluvial', 'aerea'}
 
@@ -17,8 +22,8 @@ class Grafo:
         G = nx.Graph()
         for conexion in self.conexiones:
             nodo_a, nodo_b = tuple(conexion.tramo)
-            nodo_a = nodo_a.replace("_", " ")
-            nodo_b = nodo_b.replace("_", " ")
+            nodo_a = nodo_a.ciudad.replace("_", " ")
+            nodo_b = nodo_b.ciudad.replace("_", " ")
             G.add_node(nodo_a)
             G.add_node(nodo_b)
             G.add_edge(nodo_a, nodo_b, distancia=conexion.distancia)
@@ -44,6 +49,35 @@ class Grafo:
         for elemento in self.conexiones:
             print(elemento)
 
+    # def enlazar_conexion_grafo(self,conexion): #agrega la conexion al grafo
+    #     if not isinstance(conexion,Conexion):
+    #         raise ValueError("No se ingreso una conexion")
+        
+        
+    #     nuevo_nodo = Nodo(conexion)          #Creamos un nuevo nodo con la conexion
+        
+    #     if self.primero is None:
+    #         self.primero = nuevo_nodo     # Primer conexion de la lista
+    #     else:
+    #         actual = self.primero         # 
+    #         while actual.siguiente:       # Mientras el ultimo no sea None
+    #             actual = actual.siguiente 
+    #         actual.siguiente = nuevo_nodo    
+    
+    # def _construir_adyacencias(self):
+    #     adyacencias = {}
+    #     for conexion in self.conexiones:
+    #         nodo1, nodo2 = tuple(conexion.tramo)
+    #         distancia = conexion.distancia
+
+    #         adyacencias.setdefault(nodo1, {})[nodo2] = distancia
+    #         adyacencias.setdefault(nodo2, {})[nodo1] = distancia
+
+    #     for nodo,vecinos in adyacencias:
+    #         print(f"{nodo.ciu} se conecta con:")
+    #         for vecino, distancia in vecinos.items():
+    #             print(f"  - {vecino.id} a {distancia} km")
+
     def enlazar_conexion_grafo(self,conexion): #agrega la conexion al grafo
         if not isinstance(conexion,Conexion):
             raise ValueError("No se ingreso una conexion")
@@ -60,3 +94,5 @@ class Grafo:
             return modo.lower()
         else:
             raise ValueError('No has ingresado un modo de conexion valido')
+
+

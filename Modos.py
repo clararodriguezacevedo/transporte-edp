@@ -1,11 +1,13 @@
 class Modo:
-    def __init__(self,modo:str,velocidad:int,capacidad:int,cf:int,cperkm:int,cperkg:int):
+    def __init__(self,modo:str,cantidad_vehiculos:int,costo_tot:int,costo_f:int,cperkm:int,cperkg:int,tiempo:int):
         self.modo=modo
-        self.velocidad=velocidad
-        self.capacidad=capacidad
-        self.cf=cf
-        self.cperkm=cperkm
+        self.cantidad_vehiculos=cantidad_vehiculos
+        self.costo_tot=costo_tot
+        self.costo_f=costo_f
         self.cperkg=cperkg
+        self.cperkm=cperkm
+        self.tiempo=tiempo
+        
     
     def __eq__(self,other):
         if not isinstance(self,other):
@@ -14,3 +16,11 @@ class Modo:
     def __str__(self):
         return f'Es un modo {self.modo}'
     
+    def calculo_costo_final(self,suma_total):
+        suma_total+=self.costo_tot
+
+    
+    
+
+
+        

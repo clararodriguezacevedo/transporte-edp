@@ -99,5 +99,5 @@ class Nodo:
 
     def __eq__(self,other): #dos nodos son iguales si son la misma ciudad (usado al leer conexiones.csv)
         if not isinstance(other,Nodo):
-            raise ValueError("No se ingreso un nodo.")
+            raise ValueError(f"No se ingreso un nodo.")
         return self.ciudad==other.ciudad

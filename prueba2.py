@@ -93,7 +93,16 @@ if __name__=="__main__":
         #     elemento.mostrar_info_grafo()
             
         solicitud = leer_csv_solicitues(ciudades)
-        print(solicitud)
+
+
+
+        caminos = solicitud.construir_arbol()
+        # Mostrar todos los caminos
+        print("HOALASDA")
+        for camino in caminos:
+            for n in camino:
+                print(f"{n}, ", end="")
+        # print(solicitud)
 
     except ValueError as e:
         print(e)

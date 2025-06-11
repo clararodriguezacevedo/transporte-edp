@@ -15,7 +15,7 @@ class Nodo:
         return hash(self.ciudad)
 
     def __str__(self):
-        return f"Ciudad: {self.ciudad}."
+        return self.ciudad
 
     def enlazar_conexion(self,conexion): #agrega la conexion segun el modo, al atributo correspondiente
         if not isinstance(conexion,Conexion):
@@ -44,32 +44,32 @@ class Nodo:
                         self.vecinos["automotor"].append(nodo)
 
     def mostrar_info(self): #muestra la ciudad del nodo, y todas sus conexiones
-        print(f"Ciudad: {self.ciudad}")
-        
+        print(f"\nCiudad: {self.ciudad}")
+
         print("\nVecinos Ferroviarios: ")
         if self.vecinos["ferroviaria"] != []:
             for vecino in self.vecinos["ferroviaria"]:
                 print(vecino.ciudad, end=", ")
         else:
-            print("No hay vecinos en este modo.")
+            print("No hay vecinos en este modo.", end=", ")
         print("\nVecinos Fluviales: ")
         if self.vecinos["fluvial"] != []:
             for vecino in self.vecinos["fluvial"]:
                 print(vecino.ciudad, end=", ")
         else:
-            print("No hay vecinos en este modo.")
+            print("No hay vecinos en este modo.", end=", ")
         print("\nVecinos aereos: ")
         if self.vecinos["aerea"] != []:
             for vecino in self.vecinos["aerea"]:
                 print(vecino.ciudad, end=", ")
         else:
-            print("No hay vecinos en este modo.")
+            print("No hay vecinos en este modo.", end=", ")
         print("\nVecinos automotores: ")
         if self.vecinos["automotor"] != []:
             for vecino in self.vecinos["automotor"]:
                 print(vecino.ciudad, end=", ")
         else:
-            print("No hay vecinos en este modo.")
+            print("No hay vecinos en este modo.", end=", ")
 
         # ############esto seguro se puede hacer mucho mejor, cambio hecho rapido
         # print("Modo Ferroviario: ")

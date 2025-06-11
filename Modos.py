@@ -16,8 +16,7 @@ class Modo:
     def __str__(self):
         return f'Es un modo {self.modo}'
     
-    def calculo_costo_final(self,suma_total):
-        suma_total+=self.costo_tot
+
 
     
     

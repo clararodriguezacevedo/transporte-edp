@@ -91,11 +91,15 @@ if __name__=="__main__":
         #     elemento.mostrar_info_grafo()
 
         solicitud = leer_csv_solicitues(ciudades)
-        caminos = solicitud.construir_arbol()
-        for camino in caminos:
-            for n in camino:
-                print(f"{n}, ", end="")
-            print("\n")
+        # camino_nodos, camino_conexiones = solicitud.construir_arbol("automotor")
+        # for camino in camino_conexiones:
+        #    for n in camino:
+        #        print(f"{set([i.ciudad for i in n.tramo])}, ", end="")
+        #    print("\n")
+        
+        solicitud.calcular_costos()
+        
+       
 
     except ValueError as e:
         print(e)

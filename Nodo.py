@@ -1,5 +1,6 @@
 from Conexion import Conexion
 
+
 class Nodo:
     def __init__(self,ciudad):
         self.ciudad=ciudad

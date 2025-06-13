@@ -1,6 +1,7 @@
 from Conexion import Conexion
 from Nodo import Nodo
 from Grafo import Grafo
+from Modo import Modo
 from Solicitud import Solicitud
 
 #########TODO: Hacer una clase leer_csv
@@ -96,8 +97,15 @@ if __name__=="__main__":
         #    for n in camino:
         #        print(f"{set([i.ciudad for i in n.tramo])}, ", end="")
         #    print("\n")
+
+        modos_config = {
+            "ferroviaria": Modo("ferroviaria", 100, 150000, 100, [20, 15], 3),
+            "automotor": Modo("automotor", 80, 30000, 30, 5, [1, 2]),
+            "fluvial": Modo("maritima", 40, 100000, [500, 1500], 15, 2),
+            "aerea": Modo("aerea", [600, 400], 5000, 750, 40, 10)
+        }
         
-        solicitud.calcular_costos()
+        solicitud.calcular_costos_y_tiempos(modos_config)
         
        
 

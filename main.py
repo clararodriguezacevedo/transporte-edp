@@ -38,7 +38,10 @@ if __name__ == "__main__":
         print("\nResultados de la solicitud:")
         for solicitud in solicitudes:
             itinerario=Itinerario(solicitud)
-            itinerario.calcular_costos_y_tiempos(modos_config)
+            costos_y_tiempos = itinerario.calcular_costos_y_tiempos(modos_config)
+            camino_tiempo_optimo, camino_costo_optimo = itinerario.optimos(costos_y_tiempos)
+            print(f'Camino con el minimo tiempo de entrega:\n{camino_tiempo_optimo}\nCamino con el minimo costo total:\n{camino_costo_optimo}')
+            itinerario.crear_txt_con_optimos(camino_tiempo_optimo, camino_costo_optimo)
         #solicitud.calcular_costos_y_tiempos(modos_config)
 
     except ValueError as e:

@@ -1,5 +1,6 @@
 from Conexion import Conexion
 from Modo import Modo
+from Camino import Camino
 import math
 import random
 
@@ -40,6 +41,8 @@ class Itinerario:
         return caminos_conexiones
 
     def calcular_costos_y_tiempos(self, modos_config):
+        
+        costos_y_tiempos = [] #armo una lista con todos los caminos con sus costos y tiempos
 
         for modo_nombre in Conexion.modos_permitidos:
             modo = modos_config[modo_nombre]
@@ -55,11 +58,17 @@ class Itinerario:
             cantidad_vehiculos = math.ceil(self.solicitud.peso_kg / modo.capacidad)
             for camino in caminos_conexiones:
                 costo_total, tiempo_total, cantidad_vehiculos = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
+                info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino)
+                costos_y_tiempos.append(info_camino)
+            
                 
-                print(f"\nModo: {modo_nombre} - Costo: {costo_total}, Tiempo: {tiempo_total}, Cantidad vehiculos: {cantidad_vehiculos}")
-                print("Camino:")
-                for nodo in camino:
-                    print(f" - {nodo}")
+                #print(f"\nModo: {modo_nombre} - Costo: {costo_total}, Tiempo: {tiempo_total}, Cantidad vehiculos: {cantidad_vehiculos}")
+                #print("Camino:")
+                #for nodo in camino:
+                #    print(f" - {nodo}")
+        for info_camino in costos_y_tiempos:
+            print(info_camino)      
+        return costos_y_tiempos
 
     def _calcular_costo_tiempo_camino(self, modo_nombre, vehiculo, camino, cantidad_vehiculos):
         costo_tramo_total = 0
@@ -104,3 +113,49 @@ class Itinerario:
 
         costo_total = cantidad_vehiculos * costo_tramo_total + cperkg * self.solicitud.peso_kg
         return costo_total, tiempo_total, cantidad_vehiculos
+    
+    def optimos(self, costos_y_tiempos): 
+        camino_tiempo_optimo = None
+        camino_costo_optimo = None
+        
+        for actual in costos_y_tiempos:
+            if camino_tiempo_optimo == None:
+                camino_tiempo_optimo = actual
+            elif actual.tiempo_total < camino_tiempo_optimo.tiempo_total:
+                camino_tiempo_optimo = actual
+            elif actual.tiempo_total == camino_tiempo_optimo.tiempo_total: #si los tiempos son iguales, me quedo con el camino mas barato
+                if camino_tiempo_optimo.costo_total > actual:
+                    camino_tiempo_optimo = actual
+            
+            if camino_costo_optimo == None:
+                camino_costo_optimo = actual
+            elif actual.costo_total < camino_costo_optimo.costo_total:
+                camino_costo_optimo = actual
+            elif actual.costo_total == camino_costo_optimo: #si los costos son iguales, me quedo con el camino mas rapido
+                if camino_costo_optimo.tiempo_total > actual.tiempo_total:
+                    camino_costo_optimo = actual
+        
+        return camino_tiempo_optimo, camino_costo_optimo
+    
+    
+    def crear_txt_con_optimos(self, camino_tiempo_optimo, camino_costo_optimo):
+        with open("optimos.txt", "w") as archivo:
+            archivo.write("Camino con el minimo tiempo de entrega:\n")
+            archivo.write(f'{camino_tiempo_optimo}\n')
+            archivo.write("Camino con el minimo costo total:\n")
+            archivo.write(f'{camino_costo_optimo}\n')
+
+            
+
+
+ 
+    
+                
+                
+                
+        
+        
+        
+        
+        
+        

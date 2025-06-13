@@ -1,6 +1,8 @@
 from Conexion import Conexion
 from Modo import Modo
 from Camino import Camino
+import matplotlib.pyplot as pyplot
+
 import math
 import random
 
@@ -57,8 +59,8 @@ class Itinerario:
 
             cantidad_vehiculos = math.ceil(self.solicitud.peso_kg / modo.capacidad)
             for camino in caminos_conexiones:
-                costo_total, tiempo_total, cantidad_vehiculos = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
-                info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino)
+                costo_total, tiempo_total, cantidad_vehiculo, registros = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
+                info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino, registros)
                 costos_y_tiempos.append(info_camino)
             
                 
@@ -73,6 +75,10 @@ class Itinerario:
     def _calcular_costo_tiempo_camino(self, modo_nombre, vehiculo, camino, cantidad_vehiculos):
         costo_tramo_total = 0
         tiempo_total = 0
+        #empiezo tres listas con registro de la informacion que voy a necesitar para hacer los graficos
+        registro_tiempo = [0] 
+        registro_distancia = [0]
+        registro_costo = [vehiculo.costo_f]
 
         for conexion in camino:
             distancia = conexion.distancia
@@ -80,6 +86,7 @@ class Itinerario:
             cperkm = vehiculo.cperkm
             cperkg = vehiculo.cperkg
             costo_fijo = vehiculo.costo_f
+            i = 0 #inicio un contador para asegurarme de contar solo 1 vez los costos fijos en el registro
 
             match modo_nombre:
                 case "ferroviaria":
@@ -110,9 +117,14 @@ class Itinerario:
             tiempo = 60 * distancia / velocidad #en minutos
             tiempo_total += tiempo
             costo_tramo_total += cperkm * distancia + costo_fijo
+            
+            registro_costo.append(costo_tramo_total*cantidad_vehiculos + cperkg* self.solicitud.peso_kg)
+            registro_tiempo.append(tiempo_total)
+            registro_distancia.append(distancia)
 
+        registros = {'tiempo': registro_tiempo, 'costo': registro_costo, 'distancia': registro_distancia} #guardo la informacion de los registros en un diccionario
         costo_total = cantidad_vehiculos * costo_tramo_total + cperkg * self.solicitud.peso_kg
-        return costo_total, tiempo_total, cantidad_vehiculos
+        return costo_total, tiempo_total, cantidad_vehiculos, registros
     
     def optimos(self, costos_y_tiempos): 
         camino_tiempo_optimo = None
@@ -137,7 +149,34 @@ class Itinerario:
         
         return camino_tiempo_optimo, camino_costo_optimo
     
+    def crear_graficos(self, camino1, camino2):
+        print(camino1.registros)
+        print(camino2.registros)
+
+        pyplot.plot(camino1.registros['tiempo'], camino1.registros['distancia'], color = 'green', marker = 'o')
+        pyplot.plot(camino2.registros['tiempo'], camino2.registros['distancia'], color = 'red', marker = 's')
+        pyplot.xlabel("Tiempo Acumulado (m)")
+        pyplot.ylabel("Distancia Acumulada (km)")
+        pyplot.title("Distancia Acumulada vs Tiempo Acumulado")
+        pyplot.grid(True)
+        pyplot.show()
+        
+        pyplot.plot(camino1.registros['distancia'], camino1.registros['costo'], color = 'green', marker = 'o')
+        pyplot.plot(camino2.registros['distancia'], camino2.registros['costo'], color = 'red', marker = 's')
+        pyplot.xlabel("Distancia Acumulada (km)")
+        pyplot.ylabel("Costo acumulado ($)")
+        pyplot.title("Costo Acumulado vs Distancia Acumulada")
+        pyplot.grid(True)
+        pyplot.show()
     
+        pyplot.plot(camino1.registros['tiempo'], camino1.registros['costo'], color = 'green', marker = 'o')
+        pyplot.plot(camino2.registros['tiempo'], camino2.registros['costo'], color = 'red', marker = 's')
+        pyplot.xlabel("Tiempo acumulado (m)")
+        pyplot.ylabel("Costo acumulado ($)")
+        pyplot.title("Costo Acumulado vs Tiempo Acumulado")
+        pyplot.grid(True)
+        pyplot.show()
+        
     def crear_txt_con_optimos(self, camino_tiempo_optimo, camino_costo_optimo):
         with open("optimos.txt", "w") as archivo:
             archivo.write("Camino con el minimo tiempo de entrega:\n")

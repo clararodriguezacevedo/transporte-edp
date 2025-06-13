@@ -1,5 +1,6 @@
 from LectorCSV import LectorCSV
 from Modo import Modo
+from Itinerario import Itinerario
 
 if __name__ == "__main__":
     try:
@@ -23,7 +24,7 @@ if __name__ == "__main__":
             grafo.mostrar_info_grafo()
 
         # Leer solicitud
-        solicitud = lector.leer_solicitud(ciudades)
+        solicitudes = lector.leer_solicitud(ciudades)
 
         # Definir configuracion de modos de transporte
         modos_config = {
@@ -35,7 +36,10 @@ if __name__ == "__main__":
 
         # Calcular costos y tiempos
         print("\nResultados de la solicitud:")
-        solicitud.calcular_costos_y_tiempos(modos_config)
+        for solicitud in solicitudes:
+            itinerario=Itinerario(solicitud)
+            itinerario.calcular_costos_y_tiempos(modos_config)
+        #solicitud.calcular_costos_y_tiempos(modos_config)
 
     except ValueError as e:
         print(f"Error: {e}")

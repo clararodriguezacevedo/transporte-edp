@@ -78,6 +78,7 @@ class LectorCSV:
         # Devuelve un objeto Solicitud utilizando la lista de ciudades ya cargadas
         # Valida que haya una sola fila y que las ciudades de origen/destino existan
         try:
+            solicitudes=[]
             with open(self.archivo_solicitudes, "r", encoding="utf-8", newline="") as archivo:
                 archivo.readline()
                 lector = csv.reader(archivo)
@@ -93,8 +94,11 @@ class LectorCSV:
                     if not origen or not destino:
                         raise ValueError(f"Origen o destino no encontrado en {self.archivo_solicitudes}: {nombre_origen}, {nombre_destino}")
                         
+                    solicitud=Solicitud(fila[0],fila[1],origen, destino)
+                    solicitudes.append(solicitud)
 
-                    return Solicitud(id_solicitud, tipo, origen, destino)
+                return solicitudes
+                #return Solicitud(id_solicitud, tipo, origen, destino)
 
         except FileNotFoundError:
             raise FileNotFoundError("No se encontro el archivo de solicitudes")

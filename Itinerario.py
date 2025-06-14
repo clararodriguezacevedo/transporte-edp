@@ -214,7 +214,6 @@ class Itinerario:
         pyplot.grid(True)
         pyplot.show()
 
-    
 
     def comparacion_modos_grafico(self, modos_config):
         comparacion_modos = self.comparacion_modos(modos_config)  # Obtener el diccionario de costos y tiempos
@@ -226,30 +225,30 @@ class Itinerario:
         x = np.arange(len(modos))  # Posiciones en el eje X
         ancho_barra = 0.4  # Ancho de las barras
 
-        fig, ax = pyplot.subplots(figsize=(10, 6))
+        # Gráfico de costos
+        fig1, ax1 = pyplot.subplots(figsize=(10, 6))
+        # Se crea fig1 y el eje y se define el tamaño de la figura en pulgadas
+        ax1.bar(x, costos, width=ancho_barra, color="blue", alpha=0.7)
+        # Dibuja barras verticales
+        # x: son las posiciones en el eje x (una para cada modo)
+        # costos: es la altura de cada barra
+        # width: define el ancho de cada barra
+        
+        ax1.set_xticks(x) # Establece las posiciones en eje X, donde se encuentran las etiquetas
+        ax1.set_xticklabels(modos, rotation=45) # Asigna los nombre de los modos de transporte con una rotacion de 45 grados
+        ax1.set_ylabel("Costo Total")
+        ax1.set_title("Comparación de Costos por Modo de Transporte")
 
-        # Graficar barras
-        ax.bar(x - ancho_barra/2, costos, width=ancho_barra, label="Costo Total", color="blue", alpha=0.7)
+        # Gráfico de tiempos
+        fig2, ax2 = pyplot.subplots(figsize=(10, 6))
+        ax2.bar(x, tiempos, width=ancho_barra, color="orange", alpha=0.7)
+        ax2.set_xticks(x)
+        ax2.set_xticklabels(modos, rotation=45)
+        ax2.set_ylabel("Tiempo Total")
+        ax2.set_title("Comparación de Tiempos por Modo de Transporte")
 
-        # Etiquetas y formato
-        ax.set_xticks(x)
-        ax.set_xticklabels(modos, rotation=45)
-        ax.set_ylabel("Valores")
-        ax.set_title("Comparación de Costos y Tiempos por Modo de Transporte")
-        ax.legend()
-
-        pyplot.show()
-
-        ax.bar(x + ancho_barra/2, tiempos, width=ancho_barra, label="Tiempo Total", color="orange", alpha=0.7)
-
-        # Etiquetas y formato
-        ax.set_xticks(x)
-        ax.set_xticklabels(modos, rotation=45)
-        ax.set_ylabel("Valores")
-        ax.set_title("Comparación de Costos y Tiempos por Modo de Transporte")
-        ax.legend()
-            
-        pyplot.show()
+        # Mostrar ambos gráficos
+        pyplot.show(block=True)
 
     def crear_txt_con_optimos(self, camino_tiempo_optimo, camino_costo_optimo):
         with open("optimos.txt", "w") as archivo:

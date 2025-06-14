@@ -2,6 +2,7 @@ from Conexion import Conexion
 from Modo import Modo
 from Camino import Camino
 import matplotlib.pyplot as pyplot
+import numpy as np
 
 import math
 import random
@@ -43,7 +44,7 @@ class Itinerario:
         return caminos_conexiones
 
     def calcular_costos_y_tiempos(self, modos_config):
-        
+       
         costos_y_tiempos = [] #armo una lista con todos los caminos con sus costos y tiempos
 
         for modo_nombre in Conexion.modos_permitidos:
@@ -62,7 +63,8 @@ class Itinerario:
                 costo_total, tiempo_total, cantidad_vehiculo, registros = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
                 info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino, registros)
                 costos_y_tiempos.append(info_camino)
-            
+
+                
                 
                 #print(f"\nModo: {modo_nombre} - Costo: {costo_total}, Tiempo: {tiempo_total}, Cantidad vehiculos: {cantidad_vehiculos}")
                 #print("Camino:")
@@ -102,6 +104,7 @@ class Itinerario:
                         carga_vehiculos.append(peso_vehiculo_restante) 
                     cperkgs_vehiculos = [vehiculo.cperkg[0 if n < 15000 else 1] for n in carga_vehiculos]
                     cperkg = sum(c * kg for c, kg in zip(cperkgs_vehiculos, carga_vehiculos)) / self.solicitud.peso_kg
+                    
 
                 case "fluvial":
                     costo_fijo = vehiculo.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
@@ -125,6 +128,40 @@ class Itinerario:
         registros = {'tiempo': registro_tiempo, 'costo': registro_costo, 'distancia': registro_distancia} #guardo la informacion de los registros en un diccionario
         costo_total = cantidad_vehiculos * costo_tramo_total + cperkg * self.solicitud.peso_kg
         return costo_total, tiempo_total, cantidad_vehiculos, registros
+    
+    def comparacion_modos(self, modos_config):
+        comparacion_modos = {}  # Diccionario para almacenar sumas de costos y tiempos
+
+        for modo_nombre in Conexion.modos_permitidos:
+            modo = modos_config[modo_nombre]
+            caminos_conexiones = self.construir_arbol(modo_nombre)
+            
+            # Filtrar caminos según restricción de peso en "automotor"
+            if modo_nombre == "automotor":
+                caminos_conexiones = [
+                    camino for camino in caminos_conexiones
+                    if all(not conexion.valor_restriccion or conexion.valor_restriccion >= self.solicitud.peso_kg for conexion in camino)
+                ]
+
+            suma_costos, suma_tiempos = 0, 0  # Variables para acumular costos y tiempos
+            cantidad_vehiculos = math.ceil(self.solicitud.peso_kg / modo.capacidad)
+
+            for camino in caminos_conexiones:
+                costo_total, tiempo_total, cantidad_vehiculo, registros = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
+    
+                # Acumular los valores totales de costo y tiempo por modo de transporte
+                suma_costos += costo_total
+                suma_tiempos += tiempo_total
+
+            # Almacenar las sumas en el diccionario con formato [costo_total, tiempo_total]
+            comparacion_modos[modo_nombre] = [suma_costos, suma_tiempos]
+
+        # Mostrar resultados para depuración
+        for modo, valores in comparacion_modos.items():
+            print(f"Modo: {modo} -> Costo total: {valores[0]}, Tiempo total: {valores[1]}")
+
+        return comparacion_modos
+
     
     def optimos(self, costos_y_tiempos): 
         camino_tiempo_optimo = None
@@ -176,7 +213,44 @@ class Itinerario:
         pyplot.title("Costo Acumulado vs Tiempo Acumulado")
         pyplot.grid(True)
         pyplot.show()
-        
+
+    
+
+    def comparacion_modos_grafico(self, modos_config):
+        comparacion_modos = self.comparacion_modos(modos_config)  # Obtener el diccionario de costos y tiempos
+
+        modos = list(comparacion_modos.keys())  # Extraer nombres de los modos
+        costos = [comparacion_modos[modo][0] for modo in modos]  # Extraer costos
+        tiempos = [comparacion_modos[modo][1] for modo in modos]  # Extraer tiempos
+
+        x = np.arange(len(modos))  # Posiciones en el eje X
+        ancho_barra = 0.4  # Ancho de las barras
+
+        fig, ax = pyplot.subplots(figsize=(10, 6))
+
+        # Graficar barras
+        ax.bar(x - ancho_barra/2, costos, width=ancho_barra, label="Costo Total", color="blue", alpha=0.7)
+
+        # Etiquetas y formato
+        ax.set_xticks(x)
+        ax.set_xticklabels(modos, rotation=45)
+        ax.set_ylabel("Valores")
+        ax.set_title("Comparación de Costos y Tiempos por Modo de Transporte")
+        ax.legend()
+
+        pyplot.show()
+
+        ax.bar(x + ancho_barra/2, tiempos, width=ancho_barra, label="Tiempo Total", color="orange", alpha=0.7)
+
+        # Etiquetas y formato
+        ax.set_xticks(x)
+        ax.set_xticklabels(modos, rotation=45)
+        ax.set_ylabel("Valores")
+        ax.set_title("Comparación de Costos y Tiempos por Modo de Transporte")
+        ax.legend()
+            
+        pyplot.show()
+
     def crear_txt_con_optimos(self, camino_tiempo_optimo, camino_costo_optimo):
         with open("optimos.txt", "w") as archivo:
             archivo.write("Camino con el minimo tiempo de entrega:\n")

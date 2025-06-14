@@ -3,6 +3,7 @@ from Nodo import Nodo
 from Grafo import Grafo
 from Modo import Modo
 from Solicitud import Solicitud
+from Itinerario import Itinerario
 
 #########TODO: Hacer una clase leer_csv
 import csv
@@ -105,7 +106,7 @@ if __name__=="__main__":
             "aerea": Modo("aerea", [600, 400], 5000, 750, 40, 10)
         }
         
-        solicitud.calcular_costos_y_tiempos(modos_config)
+        Itinerario.calcular_costos_y_tiempos(modos_config)
         
        
 

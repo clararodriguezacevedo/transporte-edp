@@ -2,14 +2,55 @@ from Conexion import Conexion
 from Modo import Modo
 from Camino import Camino
 import matplotlib.pyplot as pyplot
+from Solicitud import Solicitud
 
 import math
 import random
 
 class Itinerario:
-    def __init__(self,solicitud):
-        self.solicitud=solicitud
+    def __init__(self,solicitud) :
+        self.solicitud= Itinerario.validar_solicitud(solicitud)
+        self.camino_tiempo_optimo = None
+        self.camino_costo_optimo = None
     
+    def __str__(self):
+        if self.camino_tiempo_optimo == None and self.camino_costo_optimo == None:
+            return"No se han encontrado los itinerarios optimos"
+        else :
+            return self.camino_tiempo_optimo, self.camino_costo_optimo
+    
+    #getters y setters
+    '''def get_solicitud(self):
+        return self.solicitud
+    def set_solicitud(self, other):
+        if validar_solicitud(other):
+            self.solicitud = other
+    def get_camino_tiempo_optimo(self):
+        return self.camino_tiempo_optimo
+    def set_camino_tiempo_optimo(self, other):
+        if validar_camino(other):
+            self.get_camino_tiempo_optimo = other
+    def get_camino_costo_optimo(self):
+        return self.camino_costo_optimo
+    def set_camino_costo_optimo(self, other):
+        if validar_camino(other):
+            self.get_camino_costo_optimo = other'''
+    
+        
+
+    @staticmethod
+    def validar_camino(camino):
+        if not isinstance(camino, Camino):
+            raise ValueError("No se ingreso un camino.")
+        return camino
+    
+    @staticmethod
+    def validar_solicitud(solicitud):
+        if not isinstance(solicitud, Solicitud):
+            raise ValueError("No has ingresado una Solicitud")    
+        return solicitud
+        return solicitud
+
     def construir_arbol(self, modo):
         caminos_nodos = []
         caminos_conexiones = []
@@ -95,7 +136,7 @@ class Itinerario:
                         velocidad = conexion.valor_restriccion
 
                 case "automotor":
-                    vehiculos_con_peso_max = self.solicitud.peso_kg // vehiculo.capacidad
+                    vehiculos_con_peso_max = int(self.solicitud.peso_kg // vehiculo.capacidad)
                     peso_vehiculo_restante= self.solicitud.peso_kg-vehiculos_con_peso_max*vehiculo.capacidad
                     carga_vehiculos = [vehiculo.capacidad] * vehiculos_con_peso_max
                     if peso_vehiculo_restante != 0:
@@ -110,7 +151,6 @@ class Itinerario:
                     # conexión.valor_restriccion se asume como probabilidad de mal tiempo
                     if conexion.valor_restriccion:
                         probabilidad = conexion.valor_restriccion #or 0.0
-                        print(f"heheh: {type(probabilidad)}")
                     else:
                         probabilidad = 0.0
                     velocidad = vehiculo.velocidad[1] if random.random() < probabilidad else vehiculo.velocidad[0]
@@ -151,6 +191,8 @@ class Itinerario:
                 if camino_costo_optimo.tiempo_total > actual.tiempo_total:
                     camino_costo_optimo = actual
         
+        self.camino_tiempo_optimo = camino_tiempo_optimo
+        self.camino_costo_optimo = camino_costo_optimo
         return camino_tiempo_optimo, camino_costo_optimo
     
     def crear_graficos(self, camino1, camino2):
@@ -184,10 +226,13 @@ class Itinerario:
     def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, modo_escritura):
         with open("optimos.txt", modo_escritura) as archivo:
             archivo.write(f"Solicitud: {solicitud.id_carga} \n")
-            archivo.write("Camino con el minimo tiempo de entrega:\n")
-            archivo.write(f'{camino_tiempo_optimo}\n')
-            archivo.write("Camino con el minimo costo total:\n")
-            archivo.write(f'{camino_costo_optimo}\n')
+            if camino_costo_optimo and camino_tiempo_optimo:
+                archivo.write("Camino con el minimo tiempo de entrega:\n")
+                archivo.write(f'{camino_tiempo_optimo}\n')
+                archivo.write("Camino con el minimo costo total:\n")
+                archivo.write(f'{camino_costo_optimo}\n')
+            else:
+                archivo.write(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
 
             
 

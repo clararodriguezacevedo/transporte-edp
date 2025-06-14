@@ -12,6 +12,9 @@ class LectorCSV:
         self.archivo_conexiones = archivo_conexiones
         self.archivo_solicitudes = archivo_solicitudes
 
+    def set_archivo_solicitudes(self, nuevo_archivo_solicitudes):
+        self.archivo_solicitudes = nuevo_archivo_solicitudes
+
     def leer_nodos(self):
         # Lee el archivo de nodos y devuelve una lista de objetos Nodo
         # Valida que cada fila tenga al menos una columna

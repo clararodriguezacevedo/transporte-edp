@@ -1,3 +1,4 @@
+Solicitud: CARGA_001 
 Camino con el minimo tiempo de entrega:
 
 Modo: ferroviaria - Costo: 217660.0, Tiempo: 294.15 minutos, Cantidad vehiculos: 1

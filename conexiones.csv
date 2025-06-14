@@ -13,6 +13,6 @@ Azul,Mar_del_Plata,Automotor,246,,
 Buenos_Aires,Mar_del_Plata,Automotor,384,,
 Zarate,Buenos_Aires,Fluvial,85,tipo,fluvial
 Buenos_Aires,Mar_del_Plata,Fluvial,384,tipo,maritimo
-Junin,Buenos_Aires,Aerea,238,,0.1
+Junin,Buenos_Aires,Aerea,238,prob_mal_tiempo,0.1
 Azul,Buenos_Aires,Aerea,278,prob_mal_tiempo,0.2
 Buenos_Aires,Mar_del_Plata,Aerea,384,prob_mal_tiempo,0.3

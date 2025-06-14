@@ -35,7 +35,6 @@ class Conexion:
     @staticmethod
     def valor_restriccion_valido(valor):
         try:
-            n=int(valor)
-            return n
+            return float(valor)
         except ValueError:
             return valor

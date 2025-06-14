@@ -108,7 +108,11 @@ class Itinerario:
 
                 case "aerea":
                     # conexión.valor_restriccion se asume como probabilidad de mal tiempo
-                    probabilidad = conexion.valor_restriccion or 0.0
+                    if conexion.valor_restriccion:
+                        probabilidad = conexion.valor_restriccion #or 0.0
+                        print(f"heheh: {type(probabilidad)}")
+                    else:
+                        probabilidad = 0.0
                     velocidad = vehiculo.velocidad[1] if random.random() < probabilidad else vehiculo.velocidad[0]
 
                 case _:
@@ -136,7 +140,7 @@ class Itinerario:
             elif actual.tiempo_total < camino_tiempo_optimo.tiempo_total:
                 camino_tiempo_optimo = actual
             elif actual.tiempo_total == camino_tiempo_optimo.tiempo_total: #si los tiempos son iguales, me quedo con el camino mas barato
-                if camino_tiempo_optimo.costo_total > actual:
+                if camino_tiempo_optimo.costo_total > actual.costo_total:
                     camino_tiempo_optimo = actual
             
             if camino_costo_optimo == None:
@@ -177,8 +181,9 @@ class Itinerario:
         pyplot.grid(True)
         pyplot.show()
         
-    def crear_txt_con_optimos(self, camino_tiempo_optimo, camino_costo_optimo):
-        with open("optimos.txt", "w") as archivo:
+    def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, modo_escritura):
+        with open("optimos.txt", modo_escritura) as archivo:
+            archivo.write(f"Solicitud: {solicitud.id_carga} \n")
             archivo.write("Camino con el minimo tiempo de entrega:\n")
             archivo.write(f'{camino_tiempo_optimo}\n')
             archivo.write("Camino con el minimo costo total:\n")

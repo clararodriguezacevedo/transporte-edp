@@ -1,4 +1,5 @@
 from Modulo import validar_numero
+from Modulo import modos_permitidos
 
 class Conexion:
     restricciones_permitidas = {'velocidad_max', 'peso_max', 'prob_mal_tiempo', 'tipo'}
@@ -27,7 +28,7 @@ class Conexion:
 
     @classmethod
     def validar_modo(cls,modo):
-        if modo.lower() in cls.modos_permitidos:
+        if modo.lower() in modos_permitidos:
             return modo.lower()
         else:
             raise ValueError(f'No has ingresado un modo de conexion valido: {modo}')

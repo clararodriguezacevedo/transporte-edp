@@ -7,7 +7,7 @@ from Solicitud import Solicitud
 class LectorCSV:
     # Clase para manejar la lectura de archivos CSV relacionados con nodos, conexiones y solicitudes
 
-    def __init__(self, archivo_nodos="nodos.csv", archivo_conexiones="conexiones.csv", archivo_solicitudes="solicitudes.csv"):
+    def __init__(self, archivo_nodos="archivos_ejemplo/original/nodos.csv", archivo_conexiones="archivos_ejemplo/original/conexiones.csv", archivo_solicitudes="archivos_ejemplo/original/solicitudes.csv"):
         self.archivo_nodos = archivo_nodos
         self.archivo_conexiones = archivo_conexiones
         self.archivo_solicitudes = archivo_solicitudes

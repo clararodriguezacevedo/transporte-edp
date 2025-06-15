@@ -39,7 +39,8 @@ class Grafo:
         plt.tight_layout()
         plt.show()
 
-    def mostrar_info_grafo(self):
+    def mostrar_info_grafo(self): #muestra la informacion del grafo y las conexiones que tiene
+        print(f"Grafo {self.modo}: ")
         for elemento in self.conexiones:
             print(elemento)
 

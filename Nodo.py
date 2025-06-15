@@ -1,6 +1,5 @@
 from Conexion import Conexion
 
-
 class Nodo:
     def __init__(self, ciudad:str, conexiones=None, vecinos=None):
         self.ciudad = ciudad
@@ -17,7 +16,7 @@ class Nodo:
             "automotor": []
         }
 
-
+    
     def __hash__(self):
         return hash(self.ciudad)
 

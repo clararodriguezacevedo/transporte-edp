@@ -1,3 +1,4 @@
+
 from LectorCSV import LectorCSV
 from Modo import Modo
 from Itinerario import Itinerario
@@ -68,3 +69,4 @@ if __name__ == "__main__":
         print(f"Error: {e}")
     except Exception as e:
         print(f"Excepcion no controlada: {e}")
+

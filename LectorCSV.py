@@ -3,14 +3,16 @@ from Conexion import Conexion
 from Nodo import Nodo
 from Grafo import Grafo
 from Solicitud import Solicitud
+from Modulo import modos_permitidos
+from collections import deque
 
 class LectorCSV:
     # Clase para manejar la lectura de archivos CSV relacionados con nodos, conexiones y solicitudes
 
-    def __init__(self, archivo_nodos="nodos.csv", archivo_conexiones="conexiones.csv", archivo_solicitudes="solicitudes.csv"):
-        self.archivo_nodos = archivo_nodos
-        self.archivo_conexiones = archivo_conexiones
-        self.archivo_solicitudes = archivo_solicitudes
+    def __init__(self, nombre_archivos="original"):
+        self.archivo_nodos = "archivos_ejemplo/" + nombre_archivos +"/nodos.csv"
+        self.archivo_conexiones =  "archivos_ejemplo/" + nombre_archivos +"/conexiones.csv"
+        self.archivo_solicitudes =  "archivos_ejemplo/" + nombre_archivos +"/solicitudes.csv"
 
     def set_archivo_solicitudes(self, nuevo_archivo_solicitudes):
         self.archivo_solicitudes = nuevo_archivo_solicitudes
@@ -19,7 +21,8 @@ class LectorCSV:
         # Lee el archivo de nodos y devuelve una lista de objetos Nodo
         # Valida que cada fila tenga al menos una columna
         
-        ciudades = []
+        ciudades = [] #armamos una lista con los Nodos porque necesitamos una estructura Mutable e Iterable y en la que se mantenga un orden
+
         try:
             with open(self.archivo_nodos, "r", encoding="utf-8", newline="") as archivo:
                 archivo.readline()  # Saltea encabezado
@@ -30,9 +33,9 @@ class LectorCSV:
                     else:
                         print(f"Fila invalida en {self.archivo_nodos}: {fila}")
             return ciudades
-        except FileNotFoundError:
+        except Exception:
             raise FileNotFoundError("No se encontro el archivo de nodos")
-            return []
+
 
     def leer_conexiones(self):
         # Lee el archivo de conexiones
@@ -40,8 +43,7 @@ class LectorCSV:
         # Valida que cada fila tenga al menos 6 campos y que las ciudades existan
         ciudades = self.leer_nodos()
 
-        modos = ["Ferroviaria", "Fluvial", "Aerea", "Automotor"]
-        grafos = [Grafo(modo) for modo in modos]
+        grafos = [Grafo(modo) for modo in modos_permitidos]
 
         try:
             with open(self.archivo_conexiones, "r", encoding="utf-8", newline="") as archivo:
@@ -73,7 +75,7 @@ class LectorCSV:
                         
                 return ciudades, grafos
 
-        except FileNotFoundError:
+        except Exception:
             raise FileNotFoundError("No se encontro el archivo de conexiones")
 
     def leer_solicitud(self, ciudades):
@@ -81,7 +83,7 @@ class LectorCSV:
         # Devuelve un objeto Solicitud utilizando la lista de ciudades ya cargadas
         # Valida que haya una sola fila y que las ciudades de origen/destino existan
         try:
-            solicitudes=[]
+            solicitudes = deque() #usamos una cola asi las solicitudes se procesan en el orden en el que se ingresaron
             with open(self.archivo_solicitudes, "r", encoding="utf-8", newline="") as archivo:
                 archivo.readline()
                 lector = csv.reader(archivo)
@@ -101,7 +103,6 @@ class LectorCSV:
                     solicitudes.append(solicitud)
 
                 return solicitudes
-                #return Solicitud(id_solicitud, tipo, origen, destino)
 
-        except FileNotFoundError:
+        except Exception:
             raise FileNotFoundError("No se encontro el archivo de solicitudes")

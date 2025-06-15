@@ -1,7 +1,7 @@
 from Conexion import Conexion
 
 class Nodo:
-    def __init__(self, ciudad, conexiones=None, vecinos=None):
+    def __init__(self, ciudad:str, conexiones=None, vecinos=None):
         self.ciudad = ciudad
         self.conexiones = conexiones if conexiones is not None else {
             "ferroviaria": [],
@@ -16,7 +16,7 @@ class Nodo:
             "automotor": []
         }
 
-
+    
     def __hash__(self):
         return hash(self.ciudad)
 
@@ -63,4 +63,4 @@ class Nodo:
     def __eq__(self,other): # Dos nodos son iguales si son la misma ciudad (usado al leer conexiones.csv)
         if not isinstance(other,Nodo):
             raise ValueError(f"No se ingreso un nodo")
-        return self.ciudad.lower()==other.ciudad.lower()
+        return self.ciudad==other.ciudad

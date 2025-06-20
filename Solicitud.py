@@ -1,10 +1,4 @@
-from Conexion import Conexion
-from Modo import Modo
 from Nodo import Nodo
-import math
-import random
-import tkinter as tk
-from tkinter import messagebox, simpledialog
 from Modulo import validar_numero
 
 class Solicitud:
@@ -12,8 +6,8 @@ class Solicitud:
         
         self.id_carga = id_carga
         self.peso_kg = validar_numero(peso_kg)
-        self.origen = Solicitud.validar_nodo(origen)
-        self.destino = Solicitud.validar_nodo(destino)
+        self.origen = self.validar_nodo(origen)
+        self.destino = self.validar_nodo(destino)
 
     def __str__(self):
         return f"Origen: {self.origen.ciudad, self.origen}. Destino: {self.destino.ciudad, self.destino}"

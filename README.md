@@ -7,7 +7,7 @@ Clase Nodo: Una clase que tiene como atributos el nombre de la ciudad, las Conex
 Se genera una instancia por cada ciudad, al leer el archivo de Nodos. Cada Nodo contiene a sus Nodos vecinos, y a las Conexiones de cada modo con las que está enlazado.
 
 Clase Conexion: Una clase que contiene el origen, el destino, el modo de transporte, la distancia en kilómetros, la restricción y el valor de la restricción (si efectivamente tiene una restricción) de una Conexión. 
-Las instancias se generan al leer Conexiones.csv. Los Nodos de cada ciudad de origen y destino se enlazan al generar la Conexión. Luego, la Conexión se almacena a sí misma dentro de cada Nodo. (si efectivamente tiene una restricción) de una Conexión. El tramo está representado como un set de Nodos (no tienen orden, entonces Azul-Junín es igual a Junín-Azul)
+Las instancias se generan al leer Conexiones.csv. Los Nodos de cada ciudad de origen y destino se enlazan al generar la Conexión. Luego, la Conexión se almacena a sí misma dentro de cada Nodo. El tramo está representado como un set de Nodos (no tienen orden, entonces Azul-Junín es igual a Junín-Azul)
 
 Clase Grafo: Clase que permite crear distintos Grafos por modo de transporte. Las Conexiones por modo de transporte se van enlazando en el Grafo al leer conexiones.csv en la clase LectorCSV.
 

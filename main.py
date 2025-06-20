@@ -9,7 +9,6 @@ if __name__ == "__main__":
     try:
         # Crear instancia del lector
         # Por defecto utiliza "original", el archivo nodos, conexiones, y solicitudes de archivos_ejemplo/original
-        # Toma tres parametros, uno para el archivo nodos, uno para conexiones y uno para solicitudes
         nombre_carpeta = input("Elija que archivos de ejemplo quiere utilizar, o presione enter para utilizar los originales por defecto: ")
         lector = LectorCSV(nombre_carpeta if nombre_carpeta else "original") # Ingresando como parametro los nombres de las carpetas en archivos_ejemplo se puede elegir que ejemplo ejecutar 
 
@@ -19,8 +18,8 @@ if __name__ == "__main__":
         # Mostrar informacion de cada ciudad y sus conexiones
         print("\nInformacion de ciudades y conexiones:")
         for ciudad in ciudades:
-            print("")
             ciudad.mostrar_info()
+            print("")
 
         # Mostrar informacion de cada grafo
         print("\nInformacion de grafos:")
@@ -29,12 +28,10 @@ if __name__ == "__main__":
             grafo.mostrar_info_grafo()
             grafo.__repr__()
 
-
         # Leer solicitud
+        # Dejar estas lineas si se quiere calcular los costos con las solicitudes ingresadas en la interfaz
         # interfaz = Interfaz(ciudades)
         # interfaz.crear_solicitud()
-
-        # Dejar esta linea si se quiere calcular los costos con las solicitudes ingresadas en la interfaz
         # lector.set_archivo_solicitudes("nuevas_solicitudes.csv") # Comentar esta linea si se quiere usar el archivo dado solicitudes.csv, que es el default
 
         solicitudes = lector.leer_solicitud(ciudades)
@@ -43,7 +40,7 @@ if __name__ == "__main__":
         modos_config = {
             "ferroviaria": Modo("ferroviaria", 100, 150000, 100, [20, 15], 3),
             "automotor": Modo("automotor", 80, 30000, 30, 5, [1, 2]),
-            "fluvial": Modo("maritima", 40, 100000, [500, 1500], 15, 2),
+            "fluvial": Modo("fluvial", 40, 100000, [500, 1500], 15, 2),
             "aerea": Modo("aerea", [600, 400], 5000, 750, 40, 10)
         }
 
@@ -60,8 +57,9 @@ if __name__ == "__main__":
                 itinerario.crear_txt_con_optimos(solicitud, camino_tiempo_optimo, camino_costo_optimo,"w")
             else:
                 itinerario.crear_txt_con_optimos(solicitud, camino_tiempo_optimo, camino_costo_optimo,"a")
+            itinerario.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
             itinerario.comparacion_modos_grafico(modos_config)
-            itinerario.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)
+
 
     except ValueError as e:
         print(f"Error: {e}")

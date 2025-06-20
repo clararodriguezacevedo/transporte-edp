@@ -80,8 +80,8 @@ class LectorCSV:
 
     def leer_solicitud(self, ciudades):
         # Lee el archivo de solicitudes
-        # Devuelve un objeto Solicitud utilizando la lista de ciudades ya cargadas
-        # Valida que haya una sola fila y que las ciudades de origen/destino existan
+        # Devuelve una lista con instancias de Solicitud utilizando la lista de ciudades ya cargadas
+        # Valida que las ciudades de origen/destino existan
         try:
             solicitudes = deque() #usamos una cola asi las solicitudes se procesan en el orden en el que se ingresaron
             with open(self.archivo_solicitudes, "r", encoding="utf-8", newline="") as archivo:

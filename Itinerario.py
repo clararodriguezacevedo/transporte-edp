@@ -5,44 +5,20 @@ import matplotlib.pyplot as pyplot
 import numpy as np
 from Solicitud import Solicitud
 from Modulo import modos_permitidos
-
 import math
 import random
 
 class Itinerario:
     def __init__(self,solicitud) :
-        self.solicitud= Itinerario.validar_solicitud(solicitud)
+        self.solicitud= self.validar_solicitud(solicitud)
         self.camino_tiempo_optimo = None
         self.camino_costo_optimo = None
     
     def __str__(self):
         if self.camino_tiempo_optimo == None and self.camino_costo_optimo == None:
-            return"No se han encontrado los itinerarios optimos"
+            return "No se han encontrado los itinerarios optimos"
         else :
             return self.camino_tiempo_optimo, self.camino_costo_optimo
-    
-    #getters y setters
-    # def get_solicitud(self):
-    #     return self.solicitud
-    # def set_solicitud(self, other):
-    #     if validar_solicitud(other):
-    #         self.solicitud = other
-    # def get_camino_tiempo_optimo(self):
-    #     return self.camino_tiempo_optimo
-    # def set_camino_tiempo_optimo(self, other):
-    #     if validar_camino(other):
-    #         self.get_camino_tiempo_optimo = other
-    # def get_camino_costo_optimo(self):
-    #     return self.camino_costo_optimo
-    # def set_camino_costo_optimo(self, other):
-    #     if validar_camino(other):
-    #         self.get_camino_costo_optimo = other
-
-    @staticmethod
-    def validar_camino(camino):
-        if not isinstance(camino, Camino):
-            raise ValueError("No se ingreso un camino.")
-        return camino
     
     @staticmethod
     def validar_solicitud(solicitud):
@@ -58,6 +34,7 @@ class Itinerario:
             visitados.add(actual)
             camino_nodo.append(actual)
 
+            # Si llegamos al destino, guardamos el camino completo en caminos_conexiones
             if actual.ciudad == self.solicitud.destino.ciudad: 
                 caminos_nodos.append(list(camino_nodo))
                 caminos_conexiones.append(list(camino_conexion))
@@ -71,6 +48,7 @@ class Itinerario:
                                 conexion_correcta = conexion
                                 break
 
+                        # Si encontramos una conexion correcta, la agregamos al camino, y continuamos con la busqueda
                         if conexion_correcta:
                             camino_conexion.append(conexion_correcta)
                             dfs(vecino, camino_nodo, camino_conexion, visitados)
@@ -80,7 +58,8 @@ class Itinerario:
             visitados.remove(actual)
 
         dfs(self.solicitud.origen, [], [], set())
-        return caminos_conexiones
+
+        return caminos_conexiones # Devuelve una lista que incluye todos los caminos posibles entre el orgien y el destino, donde cada camino es una lista de conexiones
 
     def calcular_costos_y_tiempos(self, modos_config):
         
@@ -122,8 +101,8 @@ class Itinerario:
             cperkm = vehiculo.cperkm
             cperkg = vehiculo.cperkg
             costo_fijo = vehiculo.costo_f
-            i = 0 #inicio un contador para asegurarme de contar solo 1 vez los costos fijos en el registro
 
+            # Segun el modo, redefinimos las variables que tienen alguna restriccion
             match modo_nombre:
                 case "ferroviaria":
                     cperkm = vehiculo.cperkm[0 if distancia < 200 else 1]
@@ -141,6 +120,7 @@ class Itinerario:
 
                 case "fluvial":
                     costo_fijo = vehiculo.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
+                    registro_costo = [costo_fijo]
 
                 case "aerea":
                     # conexion.valor_restriccion se asume como probabilidad de mal tiempo
@@ -183,7 +163,7 @@ class Itinerario:
                 camino_costo_optimo = actual
             elif actual.costo_total < camino_costo_optimo.costo_total:
                 camino_costo_optimo = actual
-            elif actual.costo_total == camino_costo_optimo: #si los costos son iguales, me quedo con el camino mas rapido
+            elif actual.costo_total == camino_costo_optimo.costo_total: #si los costos son iguales, me quedo con el camino mas rapido
                 if camino_costo_optimo.tiempo_total > actual.tiempo_total:
                     camino_costo_optimo = actual
         
@@ -192,8 +172,6 @@ class Itinerario:
         return camino_tiempo_optimo, camino_costo_optimo
     
     def crear_graficos(self, camino1, camino2):
-        # print(camino1.registros)
-        # print(camino2.registros)
 
         pyplot.plot(camino1.registros['tiempo'], camino1.registros['distancia'], color = 'green', marker = 'o',label='Camino Tiempo Optimizado')
         pyplot.plot(camino2.registros['tiempo'], camino2.registros['distancia'], color = 'red', marker = 's',label='Camino Costo Optimizado')
@@ -205,7 +183,7 @@ class Itinerario:
         pyplot.show()
         
         pyplot.plot(camino1.registros['distancia'], camino1.registros['costo'], color = 'green', marker = 'o',label='Camino Tiempo Optimizado')
-        pyplot.plot(camino2.registros['distancia'], camino2.registros['costo'], color = 'red', marker = 's',label='Camino Tiempo Optimizado')
+        pyplot.plot(camino2.registros['distancia'], camino2.registros['costo'], color = 'red', marker = 's',label='Camino Costo Optimizado')
         pyplot.xlabel("Distancia Acumulada (km)")
         pyplot.ylabel("Costo acumulado ($)")
         pyplot.title("Costo Acumulado vs Distancia Acumulada")
@@ -214,7 +192,7 @@ class Itinerario:
         pyplot.show()
     
         pyplot.plot(camino1.registros['tiempo'], camino1.registros['costo'], color = 'green', marker = 'o',label='Camino Tiempo Optimizado')
-        pyplot.plot(camino2.registros['tiempo'], camino2.registros['costo'], color = 'red', marker = 's',label='Camino Tiempo Optimizado')
+        pyplot.plot(camino2.registros['tiempo'], camino2.registros['costo'], color = 'red', marker = 's',label='Camino Costo Optimizado')
         pyplot.xlabel("Tiempo acumulado (m)")
         pyplot.ylabel("Costo acumulado ($)")
         pyplot.title("Costo Acumulado vs Tiempo Acumulado")
@@ -290,7 +268,8 @@ class Itinerario:
         # Mostrar ambos gráficos
         pyplot.show(block=True)
                 
-    def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, modo_escritura): #Se crea un archivo que incluye los caminos optimos, de cada solicitud ingresada
+    def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, modo_escritura): 
+        # Se crea un archivo que incluye los caminos optimos, de cada solicitud ingresada
         with open("optimos.txt", modo_escritura) as archivo:
             archivo.write(f"Solicitud: {solicitud.id_carga} \n")
             if camino_costo_optimo and camino_tiempo_optimo:
@@ -298,7 +277,7 @@ class Itinerario:
                 archivo.write(f'{camino_tiempo_optimo}\n')
                 archivo.write("Camino con el minimo costo total:\n")
                 archivo.write(f'{camino_costo_optimo}\n')
-            else: #Si se ingreso un nodo desconectado, no se encuentran caminos, y se escribe este mensaje
+            else: # Si se ingreso un nodo desconectado, no se encuentran caminos, y se escribe este mensaje
                 archivo.write(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
 
             

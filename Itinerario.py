@@ -93,7 +93,11 @@ class Itinerario:
         #empiezo tres listas con registro de la informacion que voy a necesitar para hacer los graficos
         registro_tiempo = [0] 
         registro_distancia = [0]
-        registro_costo = [vehiculo.costo_f]
+        if modo_nombre=="fluvial":
+            registro_costo = []
+            i = 0
+        else:
+            registro_costo = [vehiculo.costo_f]
 
         for conexion in camino:
             distancia = conexion.distancia
@@ -120,7 +124,9 @@ class Itinerario:
 
                 case "fluvial":
                     costo_fijo = vehiculo.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
-                    registro_costo = [costo_fijo]
+                    if i==0:
+                        registro_costo.append(costo_fijo)
+                        i+=1
 
                 case "aerea":
                     # conexion.valor_restriccion se asume como probabilidad de mal tiempo
@@ -139,7 +145,7 @@ class Itinerario:
             
             registro_costo.append(costo_tramo_total*cantidad_vehiculos + cperkg* self.solicitud.peso_kg)
             registro_tiempo.append(tiempo_total)
-            registro_distancia.append(distancia)
+            registro_distancia.append(registro_distancia[-1] + distancia)
 
         registros = {'tiempo': registro_tiempo, 'costo': registro_costo, 'distancia': registro_distancia} #guardo la informacion de los registros en un diccionario
         costo_total = cantidad_vehiculos * costo_tramo_total + cperkg * self.solicitud.peso_kg

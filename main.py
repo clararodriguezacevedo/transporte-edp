@@ -50,16 +50,20 @@ if __name__ == "__main__":
             print(f"Solicitud {solicitud.id_carga}: ")
             itinerario=Itinerario(solicitud)
             costos_y_tiempos = itinerario.calcular_costos_y_tiempos(modos_config)
-            camino_tiempo_optimo, camino_costo_optimo = itinerario.optimos(costos_y_tiempos)            
-            print(f'Camino con el minimo tiempo de entrega:\n{camino_tiempo_optimo}\nCamino con el minimo costo total:\n{camino_costo_optimo}')
+            camino_tiempo_optimo, camino_costo_optimo = itinerario.optimos(costos_y_tiempos)    
             
+            if camino_costo_optimo and camino_tiempo_optimo:        
+                print(f'Camino con el minimo tiempo de entrega:\n{camino_tiempo_optimo}\nCamino con el minimo costo total:\n{camino_costo_optimo}')
+                itinerario.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
+                itinerario.comparacion_modos_grafico(modos_config)
+            else:
+                print(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
+
             if solicitud == solicitudes[0]:
                 itinerario.crear_txt_con_optimos(solicitud, camino_tiempo_optimo, camino_costo_optimo,"w")
             else:
                 itinerario.crear_txt_con_optimos(solicitud, camino_tiempo_optimo, camino_costo_optimo,"a")
-            itinerario.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
-            itinerario.comparacion_modos_grafico(modos_config)
-
+            
 
     except ValueError as e:
         print(f"Error: {e}")

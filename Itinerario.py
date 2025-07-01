@@ -6,13 +6,16 @@ import numpy as np
 from Solicitud import Solicitud
 from Modulo import modos_permitidos
 import math
+import copy
 import random
 
 class Itinerario:
-    def __init__(self,solicitud) :
+    def __init__(self,solicitud, ciudades:list) :
         self.solicitud= self.validar_solicitud(solicitud)
+        self.ciudades = ciudades
         self.camino_tiempo_optimo = None
         self.camino_costo_optimo = None
+        self.camino_max_puntos_interes = None
     
     def __str__(self):
         if self.camino_tiempo_optimo == None and self.camino_costo_optimo == None:
@@ -78,8 +81,9 @@ class Itinerario:
 
             cantidad_vehiculos = math.ceil(self.solicitud.peso_kg / modo.capacidad)
             for camino in caminos_conexiones:
+                modo = copy.deepcopy(modo)
                 costo_total, tiempo_total, cantidad_vehiculo, registros = self._calcular_costo_tiempo_camino(modo_nombre, modo, camino, cantidad_vehiculos)
-                info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino, registros)
+                info_camino = Camino(modo_nombre, costo_total, tiempo_total, cantidad_vehiculos,camino, registros, self.ciudades)
                 costos_y_tiempos.append(info_camino)
 
         for info_camino in costos_y_tiempos:
@@ -90,7 +94,7 @@ class Itinerario:
     def _calcular_costo_tiempo_camino(self, modo_nombre, vehiculo, camino, cantidad_vehiculos):
         costo_tramo_total = 0
         tiempo_total = 0
-        #empiezo tres listas con registro de la informacion que voy a necesitar para hacer los graficos
+        #empiezo tres listas con registro de la informacion que voy a necesitar para hacer los graficos y el KPI de puntos de interes 
         registro_tiempo = [0] 
         registro_distancia = [0]
         if modo_nombre=="fluvial":
@@ -98,46 +102,52 @@ class Itinerario:
             i = 0
         else:
             registro_costo = [vehiculo.costo_f]
+            
 
         for conexion in camino:
             distancia = conexion.distancia
-            velocidad = vehiculo.velocidad 
-            cperkm = vehiculo.cperkm
-            cperkg = vehiculo.cperkg
-            costo_fijo = vehiculo.costo_f
+            velocidad, cperkm, cperkg, costo_fijo = vehiculo.aplicar_restricciones(conexion, self)
+            
+            # velocidad = vehiculo.velocidad 
+            # cperkm = vehiculo.cperkm
+            # cperkg = vehiculo.cperkg
+            # costo_fijo = vehiculo.costo_f
+    
+            if modo_nombre=="fluvial" and i==0:
+                registro_costo.append(costo_fijo)
+                i+=1
+            
 
-            # Segun el modo, redefinimos las variables que tienen alguna restriccion
-            match modo_nombre:
-                case "ferroviaria":
-                    cperkm = vehiculo.cperkm[0 if distancia < 200 else 1]
-                    if conexion.restriccion:
-                        velocidad = conexion.valor_restriccion
+            # # Segun el modo, redefinimos las variables que tienen alguna restriccion
+            # match modo_nombre:
+            #     # case "ferroviaria":
+                    
 
-                case "automotor":
-                    vehiculos_con_peso_max = int(self.solicitud.peso_kg // vehiculo.capacidad)
-                    peso_vehiculo_restante= self.solicitud.peso_kg-vehiculos_con_peso_max*vehiculo.capacidad
-                    carga_vehiculos = [vehiculo.capacidad] * vehiculos_con_peso_max
-                    if peso_vehiculo_restante != 0:
-                        carga_vehiculos.append(peso_vehiculo_restante) 
-                    cperkgs_vehiculos = [vehiculo.cperkg[0 if n < 15000 else 1] for n in carga_vehiculos]
-                    cperkg = sum(c * kg for c, kg in zip(cperkgs_vehiculos, carga_vehiculos)) / self.solicitud.peso_kg
+            #     # case "automotor":
+            #     #     vehiculos_con_peso_max = int(self.solicitud.peso_kg // vehiculo.capacidad)
+            #     #     peso_vehiculo_restante= self.solicitud.peso_kg-vehiculos_con_peso_max*vehiculo.capacidad
+            #     #     carga_vehiculos = [vehiculo.capacidad] * vehiculos_con_peso_max
+            #     #     if peso_vehiculo_restante != 0:
+            #     #         carga_vehiculos.append(peso_vehiculo_restante) 
+            #     #     cperkgs_vehiculos = [vehiculo.cperkg[0 if n < 15000 else 1] for n in carga_vehiculos]
+            #     #     cperkg = sum(c * kg for c, kg in zip(cperkgs_vehiculos, carga_vehiculos)) / self.solicitud.peso_kg
 
-                case "fluvial":
-                    costo_fijo = vehiculo.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
-                    if i==0:
-                        registro_costo.append(costo_fijo)
-                        i+=1
+            #     case "fluvial":
+            #         costo_fijo = vehiculo.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
+            #         if i==0:
+            #             registro_costo.append(costo_fijo)
+            #             i+=1
 
-                case "aerea":
-                    # conexion.valor_restriccion se asume como probabilidad de mal tiempo
-                    if conexion.valor_restriccion:
-                        probabilidad = conexion.valor_restriccion
-                    else:
-                        probabilidad = 0.0
-                    velocidad = vehiculo.velocidad[1] if random.random() < probabilidad else vehiculo.velocidad[0]
+            #     #case "aerea":
+            #         # # conexion.valor_restriccion se asume como probabilidad de mal tiempo
+            #         # if conexion.valor_restriccion:
+            #         #     probabilidad = conexion.valor_restriccion
+            #         # else:
+            #         #     probabilidad = 0.0
+            #         # velocidad = vehiculo.velocidad[1] if random.random() < probabilidad else vehiculo.velocidad[0]
 
-                case _:
-                    raise ValueError(f"Modo de transporte desconocido: {modo_nombre}")
+            #     case _:
+            #         raise ValueError(f"Modo de transporte desconocido: {modo_nombre}")
 
             tiempo = 60 * distancia / velocidad #en minutos
             tiempo_total += tiempo
@@ -155,6 +165,7 @@ class Itinerario:
     def optimos(self, costos_y_tiempos): 
         camino_tiempo_optimo = None
         camino_costo_optimo = None
+        camino_max_puntos_interes = None
         
         for actual in costos_y_tiempos:
             if camino_tiempo_optimo == None:
@@ -172,10 +183,16 @@ class Itinerario:
             elif actual.costo_total == camino_costo_optimo.costo_total: #si los costos son iguales, me quedo con el camino mas rapido
                 if camino_costo_optimo.tiempo_total > actual.tiempo_total:
                     camino_costo_optimo = actual
+
+            if camino_max_puntos_interes == None:
+                camino_max_puntos_interes = actual
+            elif actual.puntos_interes > camino_max_puntos_interes.puntos_interes:
+                camino_max_puntos_interes = actual
         
         self.camino_tiempo_optimo = camino_tiempo_optimo
         self.camino_costo_optimo = camino_costo_optimo
-        return camino_tiempo_optimo, camino_costo_optimo
+        self.camino_max_puntos_interes = camino_max_puntos_interes
+        return camino_tiempo_optimo, camino_costo_optimo, camino_max_puntos_interes
     
     def crear_graficos(self, camino1, camino2):
 
@@ -274,15 +291,19 @@ class Itinerario:
         # Mostrar ambos gráficos
         pyplot.show(block=True)
                 
-    def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, modo_escritura): 
+    def crear_txt_con_optimos(self, solicitud, camino_tiempo_optimo, camino_costo_optimo, camino_max_puntos_interes, modo_escritura): 
         # Se crea un archivo que incluye los caminos optimos, de cada solicitud ingresada
-        with open("optimos.txt", modo_escritura) as archivo:
+        with open("optimisimos.txt", modo_escritura) as archivo:
             archivo.write(f"Solicitud: {solicitud.id_carga} \n")
             if camino_costo_optimo and camino_tiempo_optimo:
                 archivo.write("Camino con el minimo tiempo de entrega:\n")
                 archivo.write(f'{camino_tiempo_optimo}\n')
                 archivo.write("Camino con el minimo costo total:\n")
                 archivo.write(f'{camino_costo_optimo}\n')
+                archivo.write("Camino con la maxima cantidad de puntos de interes:\n")
+                archivo.write(f'{camino_max_puntos_interes}\n')
+
+
             else: # Si se ingreso un nodo desconectado, no se encuentran caminos, y se escribe este mensaje
                 archivo.write(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
 

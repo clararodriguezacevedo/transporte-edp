@@ -29,7 +29,7 @@ class LectorCSV:
                 lector = csv.reader(archivo)
                 for fila in lector:
                     if len(fila) >= 1 and fila[0].strip():
-                        ciudades.append(Nodo(fila[0].strip()))
+                        ciudades.append(Nodo(fila[0].strip(), fila[1].strip()))
                     else:
                         print(f"Fila invalida en {self.archivo_nodos}: {fila}")
             return ciudades

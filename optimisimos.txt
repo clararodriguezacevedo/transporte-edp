@@ -1,0 +1,24 @@
+Solicitud: CARGA_001 
+Camino con el minimo tiempo de entrega:
+
+Modo: ferroviaria - Costo: 217660.0, Tiempo: 294.15 minutos, Cantidad vehiculos: 1
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 137215.0, Tiempo: 351.75 minutos, Cantidad vehiculos: 3
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 142870.0, Tiempo: 625.5 minutos, Cantidad vehiculos: 3
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+

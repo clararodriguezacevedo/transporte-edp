@@ -1,9 +1,10 @@
 from Conexion import Conexion
-from Modulo import modos_permitidos
+from Modulo import modos_permitidos, validar_numero
 
 class Nodo:
-    def __init__(self, ciudad:str, conexiones=None, vecinos=None):
+    def __init__(self, ciudad:str, puntos_de_interes:int, conexiones=None, vecinos=None):
         self.ciudad = ciudad
+        self.puntos_de_interes= validar_numero(puntos_de_interes)
         self.conexiones = conexiones if conexiones is not None else {
             "ferroviaria": [],
             "fluvial": [],
@@ -16,7 +17,6 @@ class Nodo:
             "aerea": [],
             "automotor": []
         }
-
     
     def __hash__(self):
         return hash(self.ciudad)

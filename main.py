@@ -7,7 +7,7 @@ from Interfaz import Interfaz
 from Graficos import Grafico
 
 if __name__ == "__main__":
-    #try:
+    try:
         # Crear instancia del lector
         # Por defecto utiliza "original", el archivo nodos, conexiones, y solicitudes de archivos_ejemplo/original
         nombre_carpeta = input("Elija que archivos de ejemplo quiere utilizar, o presione enter para utilizar los originales por defecto: ")
@@ -68,10 +68,10 @@ if __name__ == "__main__":
                 itinerario.crear_txt_con_optimos(solicitud, camino_tiempo_optimo, camino_costo_optimo,camino_max_puntos_interes,"a")
             
 
-    # except ValueError as e:
-    #     print(f"Error: {e}")
-    # except FileNotFoundError as e:
-    #     print(f"Error: {e}")
-    # except Exception as e:
-    #     print(f"Excepcion no controlada: {e}")
+    except ValueError as e:
+        print(f"Error: {e}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"Excepcion no controlada: {e}")
 

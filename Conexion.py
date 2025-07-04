@@ -1,7 +1,7 @@
 from Modulo import validar_numero, validar_modo
 
 class Conexion:
-    restricciones_permitidas = {'velocidad_max', 'peso_max', 'prob_mal_tiempo', 'tipo'}
+    restricciones_permitidas = ('velocidad_max', 'peso_max', 'prob_mal_tiempo', 'tipo') #Utilizamos una tupla porque no es mutable
 
     def __init__(self,origen,destino,modo,distancia,restriccion,valor_restriccion): #los datos del archivo
         self.origen=origen

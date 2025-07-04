@@ -11,8 +11,6 @@ import copy
 import random
 
 class Grafico:
-    def __init__(self):
-        pass
     
     @staticmethod
     def graficar_frecuencia_ciudades(itinerario):
@@ -127,3 +125,42 @@ class Grafico:
         ax2.set_title("Comparación de Tiempos por Modo de Transporte")
 
         pyplot.show()
+        
+    @staticmethod
+    def dispersion_costos_tiempos(costos_y_tiempos):
+        tiempos_por_modo = {}
+        costos_por_modo = {}
+
+        for camino in costos_y_tiempos:
+            modo = camino.modo
+            if modo not in tiempos_por_modo:
+                tiempos_por_modo[modo] = []
+                costos_por_modo[modo] = []
+            tiempos_por_modo[modo].append(camino.tiempo_total)
+            costos_por_modo[modo].append(camino.costo_total)
+
+        # Boxplot de tiempos
+        pyplot.figure(figsize=(10, 5))
+        pyplot.boxplot(
+            [tiempos_por_modo[modo] for modo in tiempos_por_modo],
+            labels=list(tiempos_por_modo.keys())
+        )
+        pyplot.title("Dispersión de Tiempos de los caminos por Modo de Transporte")
+        pyplot.ylabel("Tiempo total (minutos)")
+        pyplot.grid(True, axis='y', linestyle='--', alpha=0.7)
+        pyplot.show()
+
+        # Boxplot de costos
+        pyplot.figure(figsize=(10, 5))
+        pyplot.boxplot(
+            [costos_por_modo[modo] for modo in costos_por_modo],
+            labels=list(costos_por_modo.keys())
+        )
+        pyplot.title("Dispersión de Costos de los caminos por Modo de Transporte")
+        pyplot.ylabel("Costo total ($)")
+        pyplot.grid(True, axis='y', linestyle='--', alpha=0.7)
+        pyplot.show()
+
+
+
+    

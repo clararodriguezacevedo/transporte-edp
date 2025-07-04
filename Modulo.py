@@ -9,7 +9,7 @@ def validar_numero(num):
 
 
 def validar_modo(modo):
-    modos_permitidos = {'ferroviaria', 'automotor', 'fluvial', 'aerea'}
+    modos_permitidos = ('ferroviaria', 'automotor', 'fluvial', 'aerea')
     if modo.lower() in modos_permitidos:
         return modo.lower()
     else:

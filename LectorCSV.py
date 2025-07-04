@@ -28,13 +28,16 @@ class LectorCSV:
                 archivo.readline()  # Saltea encabezado
                 lector = csv.reader(archivo)
                 for fila in lector:
-                    if len(fila) >= 1 and fila[0].strip():
+                    if len(fila) >= 2 and fila[0].strip():
                         ciudades[fila[0].strip()] = Nodo(fila[0].strip(), fila[1].strip())
                     else:
                         print(f"Fila invalida en {self.archivo_nodos}: {fila}")
+                        if len(fila) <= 2:
+                            raise ValueError(f"El archivo no tiene una columna puntos de interes. Para esta segunda etapa del TP, es necesario modificar los archivos csv para que tengan esta columna. \n\nSi quiere seguir probando el proyecto, utilice los archivos de ejemplo original o muchas_solicitudes, en los que ya se ha agregado la columna")
             return ciudades
-        except Exception:
+        except FileNotFoundError:
             raise FileNotFoundError("No se encontro el archivo de nodos")
+
 
     
     def leer_conexiones(self):

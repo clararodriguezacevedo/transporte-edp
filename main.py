@@ -58,6 +58,7 @@ if __name__ == "__main__":
                 Grafico.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
                 Grafico.graficar_frecuencia_ciudades(itinerario)            
                 Grafico.comparacion_modos_grafico(itinerario, modos_config, costos_y_tiempos)
+                Grafico.dispersion_costos_tiempos(costos_y_tiempos)
             else:
                 print(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
 

@@ -1,8 +1,10 @@
 from Conexion import Conexion
+from Modulo import modos_permitidos, validar_numero
 
 class Nodo:
-    def __init__(self, ciudad:str, conexiones=None, vecinos=None):
+    def __init__(self, ciudad:str, puntos_de_interes:int, conexiones=None, vecinos=None):
         self.ciudad = ciudad
+        self.puntos_de_interes= validar_numero(puntos_de_interes)
         self.conexiones = conexiones if conexiones is not None else {
             "ferroviaria": [],
             "fluvial": [],
@@ -15,7 +17,6 @@ class Nodo:
             "aerea": [],
             "automotor": []
         }
-
     
     def __hash__(self):
         return hash(self.ciudad)
@@ -35,30 +36,13 @@ class Nodo:
     def mostrar_info(self): # Muestra la ciudad del nodo, y todas sus conexiones
         print(f"\nCiudad: {self.ciudad}")
 
-        print("\nVecinos Ferroviarios: ")
-        if self.vecinos["ferroviaria"] != []:
-            for vecino in self.vecinos["ferroviaria"]:
-                print(vecino.ciudad, end=", ")
-        else:
-            print("No hay vecinos en este modo.", end=", ")
-        print("\nVecinos Fluviales: ")
-        if self.vecinos["fluvial"] != []:
-            for vecino in self.vecinos["fluvial"]:
-                print(vecino.ciudad, end=", ")
-        else:
-            print("No hay vecinos en este modo.", end=", ")
-        print("\nVecinos aereos: ")
-        if self.vecinos["aerea"] != []:
-            for vecino in self.vecinos["aerea"]:
-                print(vecino.ciudad, end=", ")
-        else:
-            print("No hay vecinos en este modo.", end=", ")
-        print("\nVecinos automotores: ")
-        if self.vecinos["automotor"] != []:
-            for vecino in self.vecinos["automotor"]:
-                print(vecino.ciudad, end=", ")
-        else:
-            print("No hay vecinos en este modo.", end=", ")
+        for modo in modos_permitidos:
+            print(f"\nVecinos {modo}: ")
+            if self.vecinos[modo] != []:
+                for vecino in self.vecinos[modo]:
+                    print(vecino.ciudad, end=", ")
+            else:
+                print("No hay vecinos en este modo.", end=", ")
 
     def __eq__(self,other): # Dos nodos son iguales si son la misma ciudad (usado al leer conexiones.csv)
         if not isinstance(other,Nodo):

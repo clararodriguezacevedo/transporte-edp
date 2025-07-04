@@ -1,15 +1,327 @@
 Solicitud: CARGA_001 
 Camino con el minimo tiempo de entrega:
 
-Modo: ferroviaria - Costo: 217660.0, Tiempo: 294.15 minutos, Cantidad vehiculos: 1
+Modo: ferroviaria - Costo: 217660.0, Tiempo: 294.15 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 21.0
 Camino:
  - Conexion: Zarate - Buenos_Aires.
  - Conexion: Buenos_Aires - Mar_del_Plata.
 
 Camino con el minimo costo total:
 
-Modo: automotor - Costo: 137215.0, Tiempo: 351.75 minutos, Cantidad vehiculos: 3
+Modo: automotor - Costo: 137215.0, Tiempo: 351.75 minutos, Cantidad vehiculos: 3, Cantidad de puntos de interes: 21.0
 Camino:
  - Conexion: Zarate - Buenos_Aires.
  - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 142870.0, Tiempo: 625.5 minutos, Cantidad vehiculos: 3, Cantidad de puntos de interes: 35.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+
+Solicitud: CARGA_002 
+Camino con el minimo tiempo de entrega:
+
+Modo: automotor - Costo: 12455.0, Tiempo: 63.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 12455.0, Tiempo: 63.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 53525.0, Tiempo: 648.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 43.0
+Camino:
+ - Conexion: Zarate - Junin.
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Solicitud: CARGA_003 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 330550.0, Tiempo: 38.4 minutos, Cantidad vehiculos: 5, Cantidad de puntos de interes: 20.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 51950.0, Tiempo: 288.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 20.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 53835.0, Tiempo: 561.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 34.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+
+Solicitud: CARGA_004 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 100540.0, Tiempo: 23.8 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 12.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 9220.0, Tiempo: 178.5 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 12.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 37725.0, Tiempo: 537.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 42.0
+Camino:
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Solicitud: CARGA_005 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 433090.0, Tiempo: 41.7 minutos, Cantidad vehiculos: 7, Cantidad de puntos de interes: 10.0
+Camino:
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 67840.0, Tiempo: 208.5 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 10.0
+Camino:
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 114650.0, Tiempo: 378.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 30.0
+Camino:
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Solicitud: CARGA_006 
+Camino con el minimo tiempo de entrega:
+
+Modo: ferroviaria - Costo: 45800.0, Tiempo: 111.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Junin.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 14955.0, Tiempo: 138.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Junin.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 57525.0, Tiempo: 600.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 43.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Junin - Azul.
+
+Solicitud: CARGA_007 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 657420.0, Tiempo: 62.2 minutos, Cantidad vehiculos: 9, Cantidad de puntos de interes: 32.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 77230.0, Tiempo: 383.25 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 22.0
+Camino:
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 81450.0, Tiempo: 695.25 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 42.0
+Camino:
+ - Conexion: Junin - Azul.
+ - Conexion: Azul - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Solicitud: CARGA_008 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 227480.0, Tiempo: 27.8 minutos, Cantidad vehiculos: 4, Cantidad de puntos de interes: 10.0
+Camino:
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 37420.0, Tiempo: 208.5 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 10.0
+Camino:
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 63650.0, Tiempo: 378.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 30.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+
+Solicitud: CARGA_009 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 783510.0, Tiempo: 23.8 minutos, Cantidad vehiculos: 13, Cantidad de puntos de interes: 12.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 128660.0, Tiempo: 178.5 minutos, Cantidad vehiculos: 3, Cantidad de puntos de interes: 12.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 208725.0, Tiempo: 537.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 42.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Junin - Azul.
+
+Solicitud: CARGA_010 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 447880.0, Tiempo: 66.2 minutos, Cantidad vehiculos: 6, Cantidad de puntos de interes: 30.0
+Camino:
+ - Conexion: Azul - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 57260.0, Tiempo: 184.5 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 10.0
+Camino:
+ - Conexion: Azul - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 60525.0, Tiempo: 665.25 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 44.0
+Camino:
+ - Conexion: Junin - Azul.
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Solicitud: CARGA_011 
+Camino con el minimo tiempo de entrega:
+
+Modo: ferroviaria - Costo: 55875.0, Tiempo: 270.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 13.0
+Camino:
+ - Conexion: Zarate - Junin.
+ - Conexion: Junin - Azul.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 33875.0, Tiempo: 272.25 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 11.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 59450.0, Tiempo: 441.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 31.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+
+Solicitud: CARGA_012 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 793540.0, Tiempo: 51.6 minutos, Cantidad vehiculos: 11, Cantidad de puntos de interes: 22.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Azul - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 112710.0, Tiempo: 198.75 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 12.0
+Camino:
+ - Conexion: Junin - Azul.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 118860.0, Tiempo: 651.0 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 42.0
+Camino:
+ - Conexion: Junin - Buenos_Aires.
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+
+Solicitud: CARGA_013 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 432770.0, Tiempo: 38.4 minutos, Cantidad vehiculos: 7, Cantidad de puntos de interes: 20.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 65900.0, Tiempo: 288.0 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 20.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 69670.0, Tiempo: 561.75 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 34.0
+Camino:
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Junin - Azul.
+ - Conexion: Junin - Buenos_Aires.
+
+Solicitud: CARGA_014 
+Camino con el minimo tiempo de entrega:
+
+Modo: automotor - Costo: 9455.0, Tiempo: 63.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 9455.0, Tiempo: 63.75 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 1.0
+Camino:
+ - Conexion: Zarate - Buenos_Aires.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: ferroviaria - Costo: 44525.0, Tiempo: 648.0 minutos, Cantidad vehiculos: 1, Cantidad de puntos de interes: 43.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Junin - Azul.
+ - Conexion: Zarate - Junin.
+
+Solicitud: CARGA_015 
+Camino con el minimo tiempo de entrega:
+
+Modo: aerea - Costo: 743800.0, Tiempo: 62.2 minutos, Cantidad vehiculos: 10, Cantidad de puntos de interes: 32.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Junin - Buenos_Aires.
+
+Camino con el minimo costo total:
+
+Modo: automotor - Costo: 101230.0, Tiempo: 383.25 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 22.0
+Camino:
+ - Conexion: Azul - Mar_del_Plata.
+ - Conexion: Junin - Azul.
+
+Camino con la maxima cantidad de puntos de interes:
+
+Modo: automotor - Costo: 105450.0, Tiempo: 695.25 minutos, Cantidad vehiculos: 2, Cantidad de puntos de interes: 42.0
+Camino:
+ - Conexion: Buenos_Aires - Mar_del_Plata.
+ - Conexion: Azul - Buenos_Aires.
+ - Conexion: Junin - Azul.
 

@@ -1,13 +1,13 @@
 from Conexion import Conexion
 import matplotlib.pyplot as plt
 import networkx as nx
-from Modulo import modos_permitidos
+from Modulo import validar_modo
 
     
 class Grafo:
 
     def __init__(self, modo): 
-        self.modo=Grafo.validar_modo(modo) #cada modo (ferroviario, fluvial...) seria una instancia de grafo
+        self.modo=validar_modo(modo) #cada modo (ferroviario, fluvial...) seria una instancia de grafo
         self.conexiones=[] #lista con las conexiones de ese modo (podria ser otra estructura)
 
     def __str__(self):
@@ -54,11 +54,5 @@ class Grafo:
             raise ValueError("No se ingreso un grafo")
         return self.modo==other.modo
 
-    @classmethod
-    def validar_modo(cls,modo):
-        if modo.lower() in modos_permitidos:
-            return modo.lower()
-        else:
-            raise ValueError('No has ingresado un modo de conexion valido')
 
 

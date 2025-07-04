@@ -1,4 +1,4 @@
-modos_permitidos = {'ferroviaria', 'automotor', 'fluvial', 'aerea'}
+modos_permitidos = ('ferroviaria', 'automotor', 'fluvial', 'aerea')  #Usamos una tupla porque es inmutable
 
 
 def validar_numero(num):

@@ -4,6 +4,7 @@ from Modo import Modo, Automotor, Aerea, Fluvial, Ferroviaria
 from Itinerario import Itinerario
 from Solicitud import Solicitud
 from Interfaz import Interfaz
+from Graficos import Grafico
 
 if __name__ == "__main__":
     #try:
@@ -17,16 +18,16 @@ if __name__ == "__main__":
 
         # Mostrar informacion de cada ciudad y sus conexiones
         print("\nInformacion de ciudades y conexiones:")
-        for ciudad in ciudades:
+        for ciudad in ciudades.values():
             ciudad.mostrar_info()
             print("")
 
         # Mostrar informacion de cada grafo
         print("\nInformacion de grafos:")
-        for grafo in grafos:
+        for grafo in grafos.values():
             print("")
             grafo.mostrar_info_grafo()
-            #grafo.__repr__()
+            grafo.__repr__()   
 
         # Leer solicitud
         # Dejar estas lineas si se quiere calcular los costos con las solicitudes ingresadas en la interfaz
@@ -54,8 +55,9 @@ if __name__ == "__main__":
             
             if camino_costo_optimo and camino_tiempo_optimo and camino_max_puntos_interes:     
                 print(f'Camino con el minimo tiempo de entrega:\n{camino_tiempo_optimo}\nCamino con el minimo costo total:\n{camino_costo_optimo}\nCamino con la maxima cantidad de puntos de interes:\n{camino_max_puntos_interes}')
-                itinerario.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
-                itinerario.comparacion_modos_grafico(modos_config)
+                Grafico.crear_graficos(camino_tiempo_optimo, camino_costo_optimo)            
+                Grafico.graficar_frecuencia_ciudades(itinerario)            
+                Grafico.comparacion_modos_grafico(itinerario, modos_config, costos_y_tiempos)
             else:
                 print(f"No existen caminos que unan {solicitud.origen} y {solicitud.destino}")
 

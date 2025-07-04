@@ -1,4 +1,13 @@
 # transporte-edp
+CHANGELOG: Para la segunda etapa del trabajo, implementamos estos cambios.
+- Implementamos un grafico que registra la frecuencia en la que cada ciudad es visitada, tomando todos los caminos generados para una solicitud (no solo los caminos optimos)
+- Implementamos graficos de dispersion para los costos y tiempos de todos los caminos generados para una solicitud (no solo los caminos optimos)
+- Implementamos la clase Graficos, para mejorar la modularizacion y compartamentalizacion y reducir las tareas de la clase Itinerario
+- Implementamos herencia en las clases Modos, Fluvial, Aerea, Automotor, y Ferroviaria. Ahora cada clase contiene sus propios atributos y metodos propios que reducen la carga de Itinerario (antes estaba hecho con una estructura condicional en Itinerario).
+- Implementamos un nuevo KPI Puntos de interes, que se incorpora a la clase Nodo y se lee de los archivos nodos.csv (deberan ser modificados para agregar esta columna y ser compatibles con esta etapa del trabajo). Ahora, ademas de costos y tiempos, tambien se generan caminos optimos acorde a la cantidad de puntos de interes que presentan
+- Cambiamos la lista ciudades y la lista grafos por diccionarios, para agilizar la carga de conexiones en la clase LectorCSV
+- Utilizamos una nueva estructura de datos (tuplas) en Modulo (modos_permitidos) y en Conexion (restricciones_permitidas), para un uso mas eficiente de memoria
+
 Clase Lector CSV: Esta clase lee los archivos nodos.csv, conexiones.csv, y solicitudes.csv. El producto es una lista de objetos Nodos con Conexiones enlazadas y una lista de Grafos por modo, al igual que una cola de objetos Solicitud. Usamos una cola para que las Solicitudes luego se procesen en el orden en el que se ingresaron.
 
 Clase Interfaz: Al instanciar esta clase, el usuario puede ingresar la cantidad de solicitudes que quiera procesar, al igual que las solicitudes mismas. Para cada solicitud, se ingresa y valida origen, destino y cantidad de kilogramos. Para hacerlo, utilizamos tkinter. De todos modos, desde el main se puede optar por ignorar la interfaz y procesar una solicitud por defecto, proveniente de un CSV pregenerado.

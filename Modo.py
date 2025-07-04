@@ -55,9 +55,6 @@ class Fluvial(Modo):
     def aplicar_restricciones(self, conexion, itinerario):
         costo_f = self.costo_f[0 if conexion.valor_restriccion == "fluvial" else 1]
         return self.velocidad,self.cperkm,self.cperkg,costo_f
-        # if i==0:
-        #     registro_costo.append(costo_fijo)
-        #     i+=1
         
 
 class Aerea(Modo):
